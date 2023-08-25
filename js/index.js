@@ -13,3 +13,9 @@ maxBallSpeed = 40,
 netWidth = 5,
 netColor = "WHITE";
 
+// Desenhando jogadores no canvas
+function drawNet(){
+    for (let i =0; i <= canvas.height; i+=15){
+        drawRect(canvas.width / 2 - netWidth / 2, i, netWidth, 10, netColor);
+    }
+}

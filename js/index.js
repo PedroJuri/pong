@@ -122,3 +122,31 @@ function update(){
         };
     }
 }
+
+// Renderizar o jogo no espaço do canvas
+function render(){
+    // Limpar canvas com uma tela preta
+    drawRect(0, 0, canvas.width, canvas.height, "BLACK");
+    drawNet();
+    
+    // Desenhando resultado
+    drawText(user.score, canvas.width / 4, canvas.height / 2, "GRAY", 120, 'bold');
+    drawText(com.score, (3 * canvas.width) / 4, canvas.height / 2, "GRAY", 120, 'bold');
+
+    //Desenhando pranchas
+    drawRect(user.x, user.y, user.width, user.height, user.color);
+    drawRect(com.x, com.y, com.width, com.height, com.color);
+
+    // Desenhando a bola
+    drawCircle(ball.x, ball.y, ball.radius, ball.color);
+}
+
+// Rodar o jogo com loop
+function gameLoop(){
+    update();
+    render();
+}
+
+// Incluir o game para rodar à 60fps (frames por segundo)
+const framePerSec = 60;
+setInterval(gameLoop, 1000 / framePerSec);

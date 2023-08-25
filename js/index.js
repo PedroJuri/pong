@@ -38,7 +38,7 @@ function drawCircle(x, y, radius, color){
 // Desenhando o texto no canvas
 function drawText(text, x, y, color, fontSize = 60, fontWeight = 'bold', font = "Courier New"){
     context.fillStyle = color;
-    context.font = `${fontSize}px ${font}`;
+    context.font = `${fontWeight} ${fontSize}px ${font}`;
     context.textAlign = "center";
     context.fillText(text, x, y);
 }

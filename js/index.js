@@ -68,3 +68,57 @@ function movePaddle(event){
     user.y = event.clientY - rect.top - user.height / 2;
 }
 
+// Colisão entre bola e prancha
+function collision(b, p){
+    return(
+        b.x + b.radius > p.x && b.x - b.radius < p.x + p.width&& b.y + b.radius > p.y && b.y - b.radius < p.y + p.height
+    );
+}
+
+// Resetar a posição da bola e velocidade
+function resetBall(){
+    ball.x = canvas.width / 2;
+    ball.y = Math.random() * (canvas.height - ball.radius * 2) + ball.radius;
+    ball.velocityX = -ball.velocityX;
+    ball.speed = initialBallSpeed;
+}
+
+// Atualizando a lógica do game
+function update(){
+    // Chacando o resultado e resetar a bola se necessário
+    if(ball.x - ball.radius < 0){
+        com.score++;
+        resetBall();
+    }else if(ball.x + ball.radius > canvas.width){
+        user.score++;
+        resetBall()
+    }
+
+    //Atualizando a posição da bola
+    ball.x += ball.velocityX;
+    ball.y += ball.velocityY;
+
+    //Atualizando a prancha do computador baseada na posiçõa da bola
+    com.y += (ball.y - (com.y + com.height / 2)) * 0.1;
+
+    //Paredes de cima e baixo
+    if(ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height){
+        ball.velocityY = -ball.velocityY;
+    }
+
+    //Determinar qual prancha irá bater na bola e a colisão dentre as mesmas
+    let player = ball.x + ball.radius < canvas.width / 2 ? user:com;
+    if(collision(ball, player)){
+        const collidePoint = ball.y - (player.y + player.height / 2);
+        const collisionAngle = (Math.PI / 4) * (collidePoint / (player.height / 2));
+        const direction = ball.x + ball.radius < canvas.width / 2 ? 1 : -1;
+        ball.velocityX = direction * ball.speed * Math.cos(collisionAngle);
+        ball.velocityY = ball.speed * Math.sin(collisionAngle);
+        
+        //Aumentar velocidade da bola até o limite total de velocidade
+        ball.speed += 0.2;
+        if(ball.speed > maxBallSpeed){
+            ball.speed = maxBallSpeed;
+        };
+    }
+}

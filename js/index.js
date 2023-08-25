@@ -34,3 +34,22 @@ function drawCircle(x, y, radius, color){
     context.arc(x, y, radius, 0, Math.PI * 2, false);
     context.fill();
 }
+
+// Desenhando o texto no canvas
+function drawText(text, x, y, color, fontSize = 60, fontWeight = 'bold', font = "Courier New"){
+    context.fillStyle = color;
+    context.font = `${fontSize}px ${font}`;
+    context.textAlign = "center";
+    context.fillText(text, x, y);
+}
+
+// Criando o rebote do joggador
+function createPaddle(x, y, width, height, color){
+    return{x, y, width, height, color, score:0};
+}
+
+// Criando o objeto da bola
+function createBall(x, y, radius, velocityX, velocityY, color){
+    return{x, y, radius, velocityX, velocityY, color, speed: initialBallSpeed};
+}
+

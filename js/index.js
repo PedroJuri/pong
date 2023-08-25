@@ -53,3 +53,18 @@ function createBall(x, y, radius, velocityX, velocityY, color){
     return{x, y, radius, velocityX, velocityY, color, speed: initialBallSpeed};
 }
 
+// Definindo a prancha de cada usuário (usuário e máquina)
+const user = createPaddle(0, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight, "WHITE");
+const com = createPaddle(canvas.width - paddleWidth, canvas.height / 2 - paddleHeight / 2, paddleWidth, paddleHeight, "WHITE");
+
+// Definindo o objeto bola
+const ball = createBall(canvas.width / 2, canvas.height / 2, ballRadius, initialBallSpeed, initialBallSpeed, "WHITE");
+
+// Atualizando prancha conforme o mouse do usuário
+canvas.addEventListener('mousemove', movePaddle);
+
+function movePaddle(event){
+    const rect = canvas.getBoundingClientRect();
+    user.y = event.clientY - rect.top - user.height / 2;
+}
+
